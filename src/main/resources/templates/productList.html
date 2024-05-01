@@ -64,6 +64,7 @@
               <table class="table datatable">
                 <thead>
                   <tr>
+                    <th><input type="checkbox" id="checkAll" class="scale-120"></th>
                     <th style="width: 18;">
                       <b>N</b>o
                     </th>
@@ -71,16 +72,19 @@
                     <th>카테고리</th>
                     <th>가격</th>
                     <th>재고</th>
+                    <th></th>
                   </tr>
                 </thead>
                 <tbody>
                   <th:block th:each="product : ${productList}">
                     <tr>
-                      <td th:text="${product.product.no"></td>
+                      <td><input type="checkbox" name="deleteCheck" class="scale-120" value="${product.productNo%>"></td>
+                      <td th:text="${product.productNo}"></td>
                       <td th:text="${product.productName}"></td>
                       <td>아우터</td>
                       <td th:text="'$' + ${product.productPrice}"></td>
                       <td>37</td>
+                      <td><a th:href="@{/product/edit.html?(productNo=${product.productNo})}">수정</a></td>
                     </tr>
                   </th:block>
 

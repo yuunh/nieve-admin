@@ -29,4 +29,12 @@ public class ProductService {
 
         return products;
     }
+
+    public int insertProduct(Product product){
+        ProductEntity entity = ProductEntity.builder()
+                        .productName(product.getProductName())
+                                .productPrice(product.getProductPrice()).build();
+        productRepository.save(entity);
+        return 0;
+    }
 }

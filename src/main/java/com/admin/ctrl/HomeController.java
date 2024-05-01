@@ -24,14 +24,14 @@ public class HomeController {
         return "index";
     }
 
-    @GetMapping("/tables-data.html")
+    @GetMapping("/productList.html")
     public String productList(Model m) {
 
         List<Product> productList = productService.getProductList();
 
         m.addAttribute("productList", productList);
 
-        return "tables-data";
+        return "productList";
     }
 
 }
