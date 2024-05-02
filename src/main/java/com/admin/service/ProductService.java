@@ -30,10 +30,12 @@ public class ProductService {
         return products;
     }
 
-    public int insertProduct(Product product){
+    public int addProduct(Product product){
         ProductEntity entity = ProductEntity.builder()
                         .productName(product.getProductName())
-                                .productPrice(product.getProductPrice()).build();
+                        .productPrice(product.getProductPrice())
+//                        .categoryNo(product.getCategoryNo())
+                        .build();
         productRepository.save(entity);
         return 0;
     }

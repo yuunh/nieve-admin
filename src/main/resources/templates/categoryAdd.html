@@ -48,32 +48,11 @@
             <h5 class="card-title">Horizontal Form</h5>
 
             <!-- Horizontal Form -->
-            <form action="/product" method="post">
+            <form action="/category" method="post">
                 <div class="row mb-3">
-                    <label class="col-sm-2 col-form-label">상품명</label>
+                    <label class="col-sm-2 col-form-label">카테고리 이름</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" name="productName" placeholder="상품명을 입력해주세요" required>
-                    </div>
-                </div>
-                <div class="row mb-3">
-                    <label class="col-sm-2 col-form-label">가격</label>
-                    <div class="col-sm-10">
-                        <input type="number" class="form-control" name="productPrice" min="0" placeholder="가격을 입력해주세요" required>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <label for="inputState" class="form-label">카테고리</label>
-                    <select id="inputState" name="categoryNo" class="form-select">
-                        <option selected>...</option>
-                        <th:block th:each="category : ${categoryList}">
-                            <option th:value="${category.categoryNo}" th:text="${category.categoryName}"></option>
-                        </th:block>
-                    </select>
-                </div>
-                <div class="row mb-3">
-                    <label class="col-sm-2 col-form-label">상품이미지</label>
-                    <div class="col-sm-10">
-                        <input type="file" class="form-control" name="productImg">
+                        <input type="text" class="form-control" name="categoryName" required>
                     </div>
                 </div>
 

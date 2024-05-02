@@ -2,8 +2,6 @@ package com.admin.model;
 
 import lombok.*;
 
-import java.lang.classfile.instruction.StackInstruction;
-
 @Getter
 @Setter
 @Builder

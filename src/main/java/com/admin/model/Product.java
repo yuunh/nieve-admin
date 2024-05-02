@@ -12,5 +12,6 @@ public class Product {
 
     private int productNo;
     private String productName;
-    private double productPrice;
+    private int productPrice;
+    private int categoryNo;
 }
