@@ -23,6 +23,7 @@ public class ProductService {
                     .productNo(pe.getProductNo())
                     .productName(pe.getProductName())
                     .productPrice(pe.getProductPrice())
+                    .categoryNo(pe.getCategoryNo())
                     .build();
             products.add(p);
         }
@@ -30,13 +31,12 @@ public class ProductService {
         return products;
     }
 
-    public int addProduct(Product product){
+    public void addProduct(Product product){
         ProductEntity entity = ProductEntity.builder()
                         .productName(product.getProductName())
                         .productPrice(product.getProductPrice())
-//                        .categoryNo(product.getCategoryNo())
+                        .categoryNo(product.getCategoryNo())
                         .build();
         productRepository.save(entity);
-        return 0;
     }
 }

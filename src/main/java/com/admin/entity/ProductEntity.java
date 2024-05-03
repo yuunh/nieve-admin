@@ -18,13 +18,11 @@ public class ProductEntity {
     private String productName;
     private int productPrice;
 
+    @OneToOne
+    @JoinColumn(name="categoryNo")
+    private CategoryEntity category;
+
     @Column(insertable = false, updatable = false)
     @ColumnDefault("2")
     private int categoryNo;
-
-    @OneToOne
-    @JoinTable(name = "category", // 조인테이블명
-            joinColumns = @JoinColumn(name = "categoryNo"), // 본인 테이블 외래키
-            inverseJoinColumns = @JoinColumn(name = "categoryNo")) // 반대 엔티티(조인테이블)의 외래키
-    private CategoryEntity category;
 }

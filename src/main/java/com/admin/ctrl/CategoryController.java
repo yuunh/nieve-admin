@@ -17,6 +17,15 @@ public class CategoryController {
     @Autowired
     CategoryService categoryService;
 
+    @PostMapping("/category")
+    public String addCategory(@ModelAttribute Category category) {
+
+        categoryService.addCategory(category);
+        System.out.println(category);
+
+        return "redirect:/categoryList.html";
+    }
+
     @GetMapping("/categoryAdd")
     public String categoryAdd(Model m) {
 
@@ -27,10 +36,13 @@ public class CategoryController {
         return "categoryAdd";
     }
 
-    @PostMapping("/category")
-    public String addCategory(@ModelAttribute Category category) {
-        categoryService.addCategory(category);
-        System.out.println(category);
-        return "redirect:/categoryList.html";
+    @GetMapping("/categoryUpdate")
+    public String categoryUpdate(Model m) {
+
+        List<Category> categoryList = categoryService.getCategoryList();
+
+        m.addAttribute("categoryList", categoryList);
+
+        return "categoryUpdate";
     }
 }
