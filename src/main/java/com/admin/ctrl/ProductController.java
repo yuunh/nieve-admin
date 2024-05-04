@@ -31,11 +31,9 @@ public class ProductController {
     }
     @GetMapping("/productAdd")
     public String productAdd(Model m) {
-
-        List<Category> categoryList = categoryService.getCategoryList();
         List<Product> productList = productService.getProductList();
 
-        m.addAttribute("categoryList", categoryList);
+        m.addAttribute("categoryList", categoryService.getCategoryList());
         m.addAttribute("productList", productList);
         System.out.println("@@@@@" + productList);
         return "productAdd";
@@ -43,10 +41,10 @@ public class ProductController {
 
     @GetMapping("/product/edit.html")
     public String productEdit(@RequestParam(value = "productNo", required = false) int productNo, Model m) {
-
-        Product product = new Product();
+        Product product = productService.getProduct(productNo);
 
         m.addAttribute("product", product);
+        m.addAttribute("categoryList", categoryService.getCategoryList());
 
         return "productUpdate";
     }

@@ -22,7 +22,7 @@ public class ProductEntity {
     @JoinColumn(name="categoryNo")
     private CategoryEntity category;
 
-    @Column(insertable = false, updatable = false)
-    @ColumnDefault("2")
-    private int categoryNo;
+//    @Column(insertable = false, updatable = false)
+//    @ColumnDefault("2")
+//    private int categoryNo;
 }

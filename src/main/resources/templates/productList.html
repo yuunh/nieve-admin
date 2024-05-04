@@ -83,7 +83,7 @@
                       <td><input type="checkbox" name="deleteCheck" class="scale-120" value="${product.productNo%>"></td>
                       <td th:text="${product.productNo}"></td>
                       <td th:text="${product.productName}"></td>
-                      <td th:text="${product.categoryNo}"></td>
+                      <td th:text="${product.categoryName}"></td>
                       <td th:text="${product.productPrice} + '원'"></td>
                       <td>37</td>
                       <td><a th:href="@{/product/edit.html?(productNo=${product.productNo})}">수정</a></td>

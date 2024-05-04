@@ -14,4 +14,5 @@ public class Product {
     private String productName;
     private int productPrice;
     private int categoryNo;
+    private String categoryName;
 }
