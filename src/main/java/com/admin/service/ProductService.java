@@ -27,6 +27,7 @@ public class ProductService {
                     .productNo(pe.getProductNo())
                     .productName(pe.getProductName())
                     .productPrice(pe.getProductPrice())
+                    .productStock(pe.getProductStock())
                     .categoryName(ce.getCategoryName())
                     .build();
             products.add(p);
@@ -40,7 +41,8 @@ public class ProductService {
         ProductEntity entity = ProductEntity.builder()
                         .productName(product.getProductName())
                         .productPrice(product.getProductPrice())
-                        .category(category)
+                        .productStock(product.getProductStock())
+                .category(category)
                         .build();
         productRepository.save(entity);
     }
@@ -52,6 +54,7 @@ public class ProductService {
         Product p = Product.builder()
                 .productName(pe.getProductName())
                 .productPrice(pe.getProductPrice())
+                .productStock(pe.getProductStock())
                 .categoryNo(ce.getCategoryNo())
                 .categoryName(ce.getCategoryName())
                 .build();

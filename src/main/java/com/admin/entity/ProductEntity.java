@@ -17,6 +17,7 @@ public class ProductEntity {
     private int productNo;
     private String productName;
     private int productPrice;
+    private int productStock;
 
     @OneToOne
     @JoinColumn(name="categoryNo")

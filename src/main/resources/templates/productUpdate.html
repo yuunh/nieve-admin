@@ -1,43 +1,126 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>상품 수정</title>
-    <style>
-        /* 간단한 스타일링 */
-        label {
-            display: block;
-            margin-bottom: 10px;
-        }
-    </style>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+    <title>상품 정보 수정</title>
+    <meta content="" name="description">
+    <meta content="" name="keywords">
+
+    <!-- Favicons -->
+    <link href="assets/img/favicon.png" rel="icon">
+    <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.gstatic.com" rel="preconnect">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+    <!-- Vendor CSS Files -->
+    <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+    <link href="assets/vendor/quill/quill.snow.css" rel="stylesheet">
+    <link href="assets/vendor/quill/quill.bubble.css" rel="stylesheet">
+    <link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet">
+    <link href="assets/vendor/simple-datatables/style.css" rel="stylesheet">
+
+    <!-- Template Main CSS File -->
+    <link href="assets/css/style.css" rel="stylesheet">
+
 </head>
+
 <body>
-<h2>상품 정보 수정</h2>
-<form id="productForm" action="/product" method="POST" enctype="multipart/form-data">
-    <input type="hidden" name="productNo" th:value="${product.productNo}">
 
-    <label for="productName">상품명:</label>
-    <input type="text" id="productName" name="productName" th:value="${product.productName}" required>
+<!-- ======= Header ======= -->
+<div th:replace="fragments/header :: 'header'"></div>
+<!-- End Header -->
 
-    <label for="productPrice">상품가격:</label>
-    <input type="number" id="productPrice" name="productPrice" th:value="${product.productPrice}" required>
+<!-- ======= Sidebar ======= -->
+<div th:replace="fragments/sidebar :: 'aside'"></div>
+<!-- End Sidebar-->
 
-    <label for="inputState">카테고리</label>
-    <select id="inputState" name="categoryNo" class="form-select" required>
-        <th:block th:each="category : ${categoryList}">
-            <option th:value="${category.categoryNo}" th:text="${category.categoryName}" th:selected="${category.categoryNo} == ${product.categoryNo}"></option>
-        </th:block>
-    </select>
+<main id="main" class="main">
 
-    <label for="productImg">상품이미지 </label>
-    <input type="file" id="productImg" name="productImg">
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">상품 정보 수정</h5>
 
-    <div>
-        <button type="button" data-bs-toggle="modal" data-bs-target="#backModal">뒤로가기</button>
-        <button type="button" onclick="">수정하기</button>
+            <!-- Horizontal Form -->
+            <form id="productForm" action="/product" method="POST" enctype="multipart/form-data">
+                <input type="hidden" name="productNo" th:value="${product.productNo}">
+
+                <div class="row mb-3">
+                    <label class="col-sm-2 col-form-label">상품명</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="productName" name="productName" th:value="${product.productName}" required>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label class="col-sm-2 col-form-label">가격</label>
+                    <div class="col-sm-10">
+                        <input type="number" class="form-control" id="productPrice" name="productPrice" th:value="${product.productPrice}" required>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label class="col-sm-2 col-form-label">수량</label>
+                    <div class="col-sm-10">
+                        <input type="number" class="form-control" id="productStock" name="productStock" th:value="${product.productStock}" required>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label class="col-sm-2 col-form-label">카테고리</label>
+                    <div class="col-md-4">
+                        <select id="inputState" name="categoryNo" class="form-select" required>
+                            <th:block th:each="category : ${categoryList}">
+                                <option th:value="${category.categoryNo}" th:text="${category.categoryName}" th:selected="${category.categoryNo} == ${product.categoryNo}"></option>
+                            </th:block>
+                        </select>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label class="col-sm-2 col-form-label">상품이미지</label>
+                    <div class="col-sm-10">
+                        <input type="file" class="form-control" id="productImg" name="productImg">
+                    </div>
+                </div>
+
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary">수정하기</button>
+                    <button type="reset" class="btn btn-secondary">Reset</button>
+                </div>
+                <div>
+                    <button type="button" class="btn btn-secondary">뒤로가기</button>
+                    <button type="submit" class="btn btn-primary">수정하기</button>
+                </div>
+            </form>
+            <!-- End Horizontal Form -->
+
+        </div>
     </div>
-</form>
-</body>
-</html>
 
+</main><!-- End #main -->
+
+<!-- ======= Footer ======= -->
+<div th:replace="fragments/footer :: 'footer'"></div>
+<!-- End Footer -->
+
+<a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+<!-- Vendor JS Files -->
+<script src="assets/vendor/apexcharts/apexcharts.min.js"></script>
+<script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="assets/vendor/chart.js/chart.umd.js"></script>
+<script src="assets/vendor/echarts/echarts.min.js"></script>
+<script src="assets/vendor/quill/quill.min.js"></script>
+<script src="assets/vendor/simple-datatables/simple-datatables.js"></script>
+<script src="assets/vendor/tinymce/tinymce.min.js"></script>
+<script src="assets/vendor/php-email-form/validate.js"></script>
+
+<!-- Template Main JS File -->
+<script src="assets/js/main.js"></script>
+
+</body>
+
+</html>

@@ -13,6 +13,7 @@ public class Product {
     private int productNo;
     private String productName;
     private int productPrice;
+    private int productStock;
     private int categoryNo;
     private String categoryName;
 }
