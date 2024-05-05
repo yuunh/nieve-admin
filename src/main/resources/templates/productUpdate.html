@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-    <title>상품 정보 수정</title>
+    <title>상품 수정</title>
     <meta content="" name="description">
     <meta content="" name="keywords">
 
@@ -33,78 +33,74 @@
 
 <body>
 
-<!-- ======= Header ======= -->
-<div th:replace="fragments/header :: 'header'"></div>
-<!-- End Header -->
+    <!-- ======= Header ======= -->
+    <div th:replace="fragments/header :: 'header'"></div>
+    <!-- End Header -->
 
-<!-- ======= Sidebar ======= -->
-<div th:replace="fragments/sidebar :: 'aside'"></div>
-<!-- End Sidebar-->
+    <!-- ======= Sidebar ======= -->
+    <div th:replace="fragments/sidebar :: 'aside'"></div>
+    <!-- End Sidebar-->
 
-<main id="main" class="main">
+    <main id="main" class="main">
 
     <div class="card">
         <div class="card-body">
-            <h5 class="card-title">상품 정보 수정</h5>
+            <h5 class="card-title">상품 추가</h5>
 
-            <!-- Horizontal Form -->
             <form id="productForm" action="/product" method="POST" enctype="multipart/form-data">
-                <input type="hidden" name="productNo" th:value="${product.productNo}">
+            <input type="hidden" name="productNo" th:value="${product.productNo}">
 
-                <div class="row mb-3">
-                    <label class="col-sm-2 col-form-label">상품명</label>
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control" id="productName" name="productName" th:value="${product.productName}" required>
-                    </div>
+            <div class="row mb-3">
+                <label class="col-sm-2 col-form-label">상품명</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" name="productName" th:value="${product.productName}" required>
                 </div>
-                <div class="row mb-3">
-                    <label class="col-sm-2 col-form-label">가격</label>
-                    <div class="col-sm-10">
-                        <input type="number" class="form-control" id="productPrice" name="productPrice" th:value="${product.productPrice}" required>
-                    </div>
-                </div>
-                <div class="row mb-3">
-                    <label class="col-sm-2 col-form-label">수량</label>
-                    <div class="col-sm-10">
-                        <input type="number" class="form-control" id="productStock" name="productStock" th:value="${product.productStock}" required>
-                    </div>
-                </div>
-                <div class="row mb-3">
-                    <label class="col-sm-2 col-form-label">카테고리</label>
-                    <div class="col-md-4">
-                        <select id="inputState" name="categoryNo" class="form-select" required>
-                            <th:block th:each="category : ${categoryList}">
-                                <option th:value="${category.categoryNo}" th:text="${category.categoryName}" th:selected="${category.categoryNo} == ${product.categoryNo}"></option>
-                            </th:block>
-                        </select>
-                    </div>
-                </div>
-                <div class="row mb-3">
-                    <label class="col-sm-2 col-form-label">상품이미지</label>
-                    <div class="col-sm-10">
-                        <input type="file" class="form-control" id="productImg" name="productImg">
-                    </div>
-                </div>
+            </div>
 
-                <div class="text-center">
-                    <button type="submit" class="btn btn-primary">수정하기</button>
-                    <button type="reset" class="btn btn-secondary">Reset</button>
+            <div class="row mb-3">
+                <label class="col-sm-2 col-form-label">가격</label>
+                <div class="col-sm-10">
+                    <input type="number" class="form-control" name="productPrice" min="0" th:value="${product.productPrice}" required>
                 </div>
-                <div>
-                    <button type="button" class="btn btn-secondary">뒤로가기</button>
-                    <button type="submit" class="btn btn-primary">수정하기</button>
+            </div>
+
+            <div class="row mb-3">
+                <label class="col-sm-2 col-form-label">수량</label>
+                <div class="col-sm-10">
+                    <input type="number" class="form-control" name="productStock" min="0" th:value="${product.productStock}" required>
                 </div>
+            </div>
+
+            <div class="row mb-3">
+                <label class="col-sm-2 col-form-label">카테고리</label>
+                <div class="col-md-4">
+                    <select id="inputState" name="categoryNo" class="form-select" required>
+                        <th:block th:each="category : ${categoryList}">
+                            <option th:value="${category.categoryNo}" th:text="${category.categoryName}" th:selected="${category.categoryNo} == ${product.categoryNo}"></option>
+                        </th:block>
+                    </select>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <label class="col-sm-2 col-form-label">상품이미지</label>
+                <div class="col-sm-10">
+                    <input type="file" class="form-control" name="productImg">
+                </div>
+            </div>
+
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary">수정하기</button>
+                <button type="reset" class="btn btn-secondary">Reset</button>
+            </div>
             </form>
-            <!-- End Horizontal Form -->
-
         </div>
     </div>
+    </main><!-- End #main -->
 
-</main><!-- End #main -->
-
-<!-- ======= Footer ======= -->
-<div th:replace="fragments/footer :: 'footer'"></div>
-<!-- End Footer -->
+    <!-- ======= Footer ======= -->
+    <div th:replace="fragments/footer :: 'footer'"></div>
+    <!-- End Footer -->
 
 <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
@@ -122,5 +118,5 @@
 <script src="assets/js/main.js"></script>
 
 </body>
-
 </html>
+
