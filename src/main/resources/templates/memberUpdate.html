@@ -1,64 +1,76 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>회원 정보 수정</title>
-    <style>
-        /* 간단한 스타일링 */
-        table {
-            border-collapse: collapse;
-            width: 100%;
-        }
-        table, th, td {
-            border: 1px solid black;
-            padding: 8px;
-        }
-        th {
-            text-align: left;
-        }
-    </style>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>회원 정보 수정</title>
+
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+  <link href="assets/img/favicon.png" rel="icon">
+  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.gstatic.com" rel="preconnect">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="assets/vendor/quill/quill.snow.css" rel="stylesheet">
+  <link href="assets/vendor/quill/quill.bubble.css" rel="stylesheet">
+  <link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet">
+  <link href="assets/vendor/simple-datatables/style.css" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="assets/css/style.css" rel="stylesheet">
 </head>
+
 <body>
-<h2>회원 정보 수정</h2>
-<form id="memberForm" action="/member" method="POST">
-    <input type="hidden" name="memNo" th:value="${member.memNo}">
-    <input type="hidden" name="memEmail" th:value="${member.memEmail}">
-    <table>
-        <tr>
-            <th><label for="memName">이름</label></th>
-            <td><input type="text" id="memName" name="memName" th:value="${member.memName}" readonly></td>
-        </tr>
-        <tr>
-            <th><label for="memEmail">이메일</label></th>
-            <td><input type="email" id="memEmail" name="memEmail" th:value="${member.memEmail}" readonly></td>
-        </tr>
-        <tr>
-            <th><label for="phone">전화번호</label></th>
-            <td><input type="tel" id="phone" name="phone" th:value="${member.phone}" required></td>
-        </tr>
-        <tr>
-            <th><label>배송지</label></th>
-            <td><input type="text" id="address1" name="address1" th:value="${member.address1}" required></td>
-            <td><input type="text" id="address2" name="address2" th:value="${member.address2}" required></td>
-            <td><input type="text" id="postNo" name="postNo" th:value="${member.postNo}" required></td>
-        </tr>
-        <tr>
-            <th><label for="">마케팅 동의</label></th>
-            <td>
-                <select id="" name="" required>
-                    <option value="yes">동의함</option>
-                    <option value="no">동의하지 않음</option>
-                </select>
-            </td>
-        </tr>
-    </table>
+  <main id="main" class="main">
 
+    <div class="col-lg-6">
 
-    <div>
-        <button type="button" data-bs-toggle="modal" data-bs-target="#backModal">뒤로가기</button>
-        <button type="button" onclick="">수정하기</button>
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">회원 정보</h5>
+
+          <!-- Vertical Form -->
+          <form class="row g-3" id="memberForm" action="/member">
+            <input type="hidden" name="memNo" th:value="${member.memNo}">
+
+            <div class="col-12">
+              <label for="memName" class="form-label">이름</label>
+              <input type="text" class="form-control" id="memName" th:value="${member.memName}">
+            </div>
+            <div class="col-12">
+              <label for="memEmail" class="form-label">이메일</label>
+              <input type="email" class="form-control" id="memEmail" th:value="${member.memEmail}">
+            </div>
+            <div class="col-12">
+              <label for="phone" class="form-label">전화번호</label>
+              <input type="text" class="form-control" id="phone" th:value="${member.phone}">
+            </div>
+            <div class="col-12">
+              <label for="address1" class="form-label">주소</label>
+              <input type="text" class="form-control" id="address1" th:value="${member.address1}">
+            </div>
+            <div class="text-center">
+              <button type="submit" class="btn btn-primary">수정하기</button>
+              <button type="reset" class="btn btn-secondary">Reset</button>
+            </div>
+          </form><!-- Vertical Form -->
+
+        </div>
+      </div>
     </div>
-</form>
+  </main><!-- End #main -->
+
 </body>
+
 </html>
