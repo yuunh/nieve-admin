@@ -19,11 +19,11 @@ public class ProductEntity {
     private int productPrice;
     private int productStock;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name="fileNo", unique = false)
     private FileEntity file;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name="categoryNo", unique = false)
     private CategoryEntity category;
 
