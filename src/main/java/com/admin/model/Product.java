@@ -16,4 +16,6 @@ public class Product {
     private int productStock;
     private int categoryNo;
     private String categoryName;
+    private int fileNo;
+    private String fileName;
 }

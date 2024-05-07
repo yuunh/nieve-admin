@@ -3,6 +3,8 @@ package com.admin.service;
 import com.admin.common.StorageException;
 import com.admin.common.StorageFileNotFoundException;
 import com.admin.config.storage.StorageProperties;
+import com.admin.entity.FileEntity;
+import com.admin.repository.FileRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
@@ -17,12 +19,17 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.UUID;
 import java.util.stream.Stream;
 
 @Service
 public class FileSystemStorageService implements StorageService {
 
   private final Path rootLocation;
+  @Autowired
+  FileRepository fileRepository;
 
   @Autowired
   public FileSystemStorageService(StorageProperties properties) {
@@ -35,13 +42,17 @@ public class FileSystemStorageService implements StorageService {
   }
 
   @Override
-  public void store(MultipartFile file) {
+  public int store(MultipartFile file) {
     try {
       if (file.isEmpty()) {
         throw new StorageException("Failed to store empty file.");
       }
+      String originalFileName = file.getOriginalFilename();
+      String ext = originalFileName.substring(originalFileName.lastIndexOf("."));
+      String newFileName = UUID.randomUUID() + ext;
+
       Path destinationFile = this.rootLocation.resolve(
-              Paths.get(file.getOriginalFilename()))
+              Paths.get(newFileName))
           .normalize().toAbsolutePath();
       if (!destinationFile.getParent().equals(this.rootLocation.toAbsolutePath())) {
         // This is a security check
@@ -52,6 +63,16 @@ public class FileSystemStorageService implements StorageService {
         Files.copy(inputStream, destinationFile,
             StandardCopyOption.REPLACE_EXISTING);
       }
+      FileEntity e = fileRepository.save(FileEntity.builder()
+              .changeName(newFileName)
+              .filePath(this.rootLocation.resolve(
+                              Paths.get(newFileName))
+                      .normalize().toString())
+              .status("Y")
+              .originName(file.getOriginalFilename())
+              .uploadDate(LocalDateTime.now())
+              .build());
+      return e.getFileNo();
     }
     catch (IOException e) {
       throw new StorageException("Failed to store file.", e);

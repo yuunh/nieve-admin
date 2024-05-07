@@ -6,3 +6,4 @@ INSERT INTO `member` (`mem_no`, `mem_email`, `mem_name`, `mem_pwd`, `phone`, `ad
 INSERT INTO `category` (`category_no`, `category_name`) VALUES (1, 'Top');
 INSERT INTO `category` (`category_no`, `category_name`) VALUES (2, '아우터');
 INSERT INTO `product` (`product_name`, `product_price`, `product_stock`, `category_no`) VALUES ('Colorful Stylish Shirt', 15000, 26, 1);
+--SELECT 1;

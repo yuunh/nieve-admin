@@ -3,6 +3,7 @@ package com.admin.ctrl;
 import com.admin.model.Product;
 import com.admin.service.CategoryService;
 import com.admin.service.ProductService;
+import com.admin.service.StorageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -20,11 +22,17 @@ public class ProductController {
     @Autowired
     CategoryService categoryService;
 
-    @PostMapping("/product")
-    public String registerProduct(@ModelAttribute Product product) {
+    @Autowired
+    StorageService storageService;
 
+    @PostMapping("/product")
+    public String registerProduct(@ModelAttribute Product product, @RequestParam("productImg") MultipartFile productImg) {
+
+        int fileNo = storageService.store(productImg);
+        product.setFileNo(fileNo);
         productService.addProduct(product);
         System.out.println("product : " + product);
+
 
         return "redirect:/productList.html";
     }

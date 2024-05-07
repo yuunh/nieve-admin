@@ -8,6 +8,8 @@ import lombok.*;
 
 
 import java.sql.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity(name = "attachment")
 @Data
@@ -15,7 +17,7 @@ import java.sql.Date;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class AttachmentEntity {
+public class FileEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,7 +25,6 @@ public class AttachmentEntity {
     private String originName;
     private String changeName;
     private String filePath;
-    private Date uploadDate;
-    private int fileLevel;
+    private LocalDateTime uploadDate;
     private String status;
 }
