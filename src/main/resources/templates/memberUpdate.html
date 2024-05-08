@@ -50,24 +50,24 @@
           <h5 class="card-title">회원 정보</h5>
 
           <!-- Vertical Form -->
-          <form class="row g-3" id="memberForm" action="/member" method="post">
+          <form class="row g-3" id="memberForm" action="/updateMember" method="post">
             <input type="hidden" name="memNo" th:value="${member.memNo}">
 
             <div class="col-12">
               <label for="memName" class="form-label">이름</label>
-              <input type="text" class="form-control" id="memName" th:value="${member.memName}">
+              <input type="text" class="form-control" id="memName" name="memName" th:value="${member.memName}" required>
             </div>
             <div class="col-12">
               <label for="memEmail" class="form-label">이메일</label>
-              <input type="email" class="form-control" id="memEmail" th:value="${member.memEmail}">
+              <input type="email" class="form-control" id="memEmail" name="memEmail" th:value="${member.memEmail}" required>
             </div>
             <div class="col-12">
               <label for="phone" class="form-label">전화번호</label>
-              <input type="text" class="form-control" id="phone" th:value="${member.phone}">
+              <input type="text" class="form-control" id="phone" name="phone" th:value="${member.phone}" required>
             </div>
             <div class="col-12">
               <label for="address1" class="form-label">주소</label>
-              <input type="text" class="form-control" id="address1" th:value="${member.address1}">
+              <input type="text" class="form-control" id="address1" name="address1" th:value="${member.address1}" required>
             </div>
             <div class="text-center">
               <button type="submit" class="btn btn-primary">수정하기</button>

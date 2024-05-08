@@ -1,13 +1,10 @@
 package com.admin.service;
 
-import com.admin.entity.CategoryEntity;
-import com.admin.entity.FileEntity;
-import com.admin.entity.ProductEntity;
+import com.admin.entity.*;
 import com.admin.model.Category;
 import com.admin.model.Product;
-import com.admin.repository.CategoryRepository;
-import com.admin.repository.FileRepository;
-import com.admin.repository.ProductRepository;
+import com.admin.model.Review;
+import com.admin.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +17,7 @@ public class ProductService {
     @Autowired private ProductRepository productRepository;
     @Autowired private CategoryRepository categoryRepository;
     @Autowired private FileRepository fileRepository;
+    @Autowired private ReviewRepository reviewRepository;
 
     public List<Product> getProductList() {
         List<ProductEntity> productList = productRepository.findAll();
@@ -71,5 +69,25 @@ public class ProductService {
             p.setFileName(fe.getChangeName());
         }
         return p;
+    }
+
+    public List<Review> getReviewList() {
+        List<ReviewEntity> reviewList = reviewRepository.findAll();
+        List<Review> reviews = new ArrayList<>();
+        for (ReviewEntity re : reviewList) {
+            MemberEntity me = re.getMember();
+            ProductEntity pe = re.getProduct();
+            FileEntity fe = re.getFile();
+            Review r = Review.builder()
+                    .reviewTitle(re.getReviewTitle())
+                    .reviewContent(re.getReviewContent())
+                    .reviewDate(re.getReviewDate())
+                    .memEmail(me.getMemEmail())
+                    .productName(pe.getProductName())
+                    .fileName(fe.getChangeName())
+                    .build();
+            reviews.add(r);
+        }
+        return reviews;
     }
 }

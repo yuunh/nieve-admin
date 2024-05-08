@@ -10,35 +10,31 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.List;
+
 @Controller
 public class MemberController {
 
     @Autowired
-    MemberService memberService;
+    private MemberService memberService;
 
     @GetMapping("/member/edit.html")
-    public String memberEdit(@RequestParam(value = "memNo", required = false) int memNo, Model m) {
-
+    public String memberEdit(@RequestParam("memNo") int memNo, Model model) {
         Member member = memberService.getMember(memNo);
-
-        m.addAttribute("member", member);
-
+        model.addAttribute("member", member);
         return "memberUpdate";
     }
 
     @GetMapping("/memberList")
-    public String memberUpdate(@ModelAttribute Member member) {
-
-        memberService.getMemberList();
-
-        return "redirect:/memberList.html";
+    public String memberList(Model model) {
+        List<Member> memberList = memberService.getMemberList();
+        model.addAttribute("memberList", memberList);
+        return "memberList";
     }
 
-    @PostMapping("/member")
+    @PostMapping("/updateMember")
     public String updateMember(@ModelAttribute Member member) {
-
         memberService.updateMember(member);
-
-        return "redirect:/memberList.html";
+        return "redirect:/memberList";
     }
 }

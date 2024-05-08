@@ -3,6 +3,7 @@ package com.admin.ctrl;
 import com.admin.model.Category;
 import com.admin.model.Member;
 import com.admin.model.Product;
+import com.admin.model.Review;
 import com.admin.service.CategoryService;
 import com.admin.service.MemberService;
 import com.admin.service.ProductService;
@@ -63,4 +64,13 @@ public class HomeController {
         return "categoryList";
     }
 
+    @GetMapping("/reviewManagement.html")
+    public String reviewManagement(Model m) {
+
+        List<Review> reviewList = productService.getReviewList();
+
+        m.addAttribute("reviewList", reviewList);
+
+        return "reviewManagement";
+    }
 }
