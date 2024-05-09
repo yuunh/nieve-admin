@@ -36,4 +36,24 @@ public class CategoryService {
                 .build();
         categoryRepository.save(entity);
     }
+
+    public void updateCategory(Category category) {
+
+        CategoryEntity ce = categoryRepository.findById(category.getCategoryNo()).orElseThrow();
+
+        ce.setCategoryName(category.getCategoryName());
+
+        categoryRepository.save(ce);
+    }
+
+    public Category getCategory(int categoryNo) {
+
+        CategoryEntity ce = categoryRepository.findById(categoryNo).orElseThrow();
+
+        Category c = Category.builder()
+                .categoryNo(ce.getCategoryNo())
+                .categoryName(ce.getCategoryName())
+                .build();
+        return c;
+    }
 }

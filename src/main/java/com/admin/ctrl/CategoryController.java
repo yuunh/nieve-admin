@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -36,13 +37,21 @@ public class CategoryController {
         return "categoryAdd";
     }
 
-    @GetMapping("/categoryUpdate")
-    public String categoryUpdate(Model m) {
+    @GetMapping("/category/edit.html")
+    public String categoryEdit(@RequestParam(value = "categoryNo" ,required = false) int categoryNo, Model m) {
 
-        List<Category> categoryList = categoryService.getCategoryList();
+        Category category = categoryService.getCategory(categoryNo);
 
-        m.addAttribute("categoryList", categoryList);
+        m.addAttribute("category", category);
 
         return "categoryUpdate";
+    }
+
+    @PostMapping("/categoryUpdate")
+    public String categoryUpdate(@ModelAttribute Category category) {
+
+        categoryService.updateCategory(category);
+
+        return "redirect:/category/edit.html?&categoryNo=" + category.getCategoryNo();
     }
 }
