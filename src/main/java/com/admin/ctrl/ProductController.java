@@ -1,5 +1,6 @@
 package com.admin.ctrl;
 
+import com.admin.entity.ProductEntity;
 import com.admin.model.Product;
 import com.admin.service.CategoryService;
 import com.admin.service.ProductService;
@@ -58,5 +59,16 @@ public class ProductController {
         return "productUpdate";
     }
 
+    @PostMapping("/productUpdate")
+    public String productUpdate(@ModelAttribute Product product, @RequestParam(value = "productImg", required = false) MultipartFile productImg) {
 
+        if (productImg != null && !productImg.isEmpty()) {
+            int fileNo = storageService.store(productImg);
+            product.setFileNo(fileNo);
+        }
+
+        productService.updateProduct(product);
+
+        return "redirect:/product/edit.html?&productNo=" + product.getProductNo();
+    }
 }

@@ -56,6 +56,7 @@ public class ProductService {
         CategoryEntity ce = pe.getCategory();
         FileEntity fe = pe.getFile();
         Product p = Product.builder()
+                .productNo(pe.getProductNo())
                 .productName(pe.getProductName())
                 .productPrice(pe.getProductPrice())
                 .productStock(pe.getProductStock())
@@ -89,5 +90,21 @@ public class ProductService {
             reviews.add(r);
         }
         return reviews;
+    }
+
+    public void updateProduct(Product product) {
+        ProductEntity productEntity = productRepository.findById(product.getProductNo()).orElseThrow();
+        CategoryEntity categoryEntity = categoryRepository.findById(product.getCategoryNo()).orElseThrow();
+        if (product.getFileNo() != productEntity.getFile().getFileNo()) {
+            FileEntity fileEntity = fileRepository.findById(product.getFileNo()).orElseThrow();
+            productEntity.setFile(fileEntity);
+        }
+
+        productEntity.setProductName(product.getProductName());
+        productEntity.setProductPrice(product.getProductPrice());
+        productEntity.setProductStock(product.getProductStock());
+        productEntity.setCategory(categoryEntity);
+
+        productRepository.save(productEntity);
     }
 }

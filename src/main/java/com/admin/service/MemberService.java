@@ -20,6 +20,7 @@ public class MemberService {
     public Member getMember(int memNo) {
         MemberEntity me = memberRepository.findById(memNo).orElseThrow();
         Member m = Member.builder()
+                .memNo(me.getMemNo())
                 .memName(me.getMemName())
                 .memEmail(me.getMemEmail())
                 .phone(me.getPhone())
@@ -46,6 +47,10 @@ public class MemberService {
     }
 
     public void updateMember(Member member) {
-
+        MemberEntity memberEntity = memberRepository.findById(member.getMemNo()).orElseThrow();
+        memberEntity.setMemEmail(member.getMemEmail());
+        memberEntity.setPhone(member.getPhone());
+        memberEntity.setAddress1(member.getAddress1());
+        memberRepository.save(memberEntity);
     }
 }

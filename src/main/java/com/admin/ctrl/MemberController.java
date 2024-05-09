@@ -35,6 +35,6 @@ public class MemberController {
     @PostMapping("/updateMember")
     public String updateMember(@ModelAttribute Member member) {
         memberService.updateMember(member);
-        return "redirect:/memberList";
+        return "redirect:/member/edit.html?&memNo=" + member.getMemNo();
     }
 }

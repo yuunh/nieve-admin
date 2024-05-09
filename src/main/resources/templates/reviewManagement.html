@@ -79,7 +79,7 @@
                             <th:block th:each="review : ${reviewList}">
                                 <tr>
                                     <td><input type="checkbox" name="deleteCheck" class="scale-120" value="${}>"></td>
-                                    <td th:text="${review.memNo}"></td>
+                                    <td th:text="${review.memEmail}"></td>
                                     <td th:text="${review.productName}"></td>
                                     <td th:text="${review.reviewContent}"></td>
                                     <td th:text="${review.reviewDate}"></td>
