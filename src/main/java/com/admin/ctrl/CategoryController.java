@@ -38,7 +38,7 @@ public class CategoryController {
     }
 
     @GetMapping("/category/edit.html")
-    public String categoryEdit(@RequestParam(value = "categoryNo" ,required = false) int categoryNo, Model m) {
+    public String categoryEdit(@RequestParam(value = "categoryNo", required = false) int categoryNo, Model m) {
 
         Category category = categoryService.getCategory(categoryNo);
 

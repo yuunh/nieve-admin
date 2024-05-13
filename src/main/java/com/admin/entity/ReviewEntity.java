@@ -1,9 +1,6 @@
 package com.admin.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.Data;
 import lombok.Getter;
 
@@ -15,10 +12,13 @@ import java.sql.Date;
 public class ReviewEntity {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int reviewNo;
     private String reviewTitle;
     private String reviewContent;
     private Date reviewDate;
+    private int reviewStar;
+    private String reviewState;
 
     @ManyToOne
     @JoinColumn(name="fileNo", unique = false)

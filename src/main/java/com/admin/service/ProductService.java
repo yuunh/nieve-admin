@@ -83,6 +83,7 @@ public class ProductService {
                     .reviewTitle(re.getReviewTitle())
                     .reviewContent(re.getReviewContent())
                     .reviewDate(re.getReviewDate())
+                    .reviewStar(re.getReviewStar())
                     .memEmail(me.getMemEmail())
                     .productName(pe.getProductName())
                     .fileName(fe.getChangeName())
@@ -90,6 +91,14 @@ public class ProductService {
             reviews.add(r);
         }
         return reviews;
+    }
+
+    public void deleteReviews(Review review) {
+
+        ReviewEntity reviewEntity = reviewRepository.findById(review.getReviewNo()).orElseThrow();
+        reviewEntity.setReviewState("n");
+        reviewRepository.save(reviewEntity);
+
     }
 
     public void updateProduct(Product product) {

@@ -13,10 +13,13 @@ import java.sql.Date;
 @AllArgsConstructor
 public class Review {
 
+    private int reviewNo;
     private String reviewTitle;
     private String reviewContent;
     private Date reviewDate;
+    private int reviewStar;
     private String fileName;
     private String memEmail;
     private String productName;
+    private String reviewState;
 }

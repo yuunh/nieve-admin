@@ -29,6 +29,8 @@
     <!-- Template Main CSS File -->
     <link href="assets/css/style.css" rel="stylesheet">
 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
 </head>
 
 <body>
@@ -50,7 +52,7 @@
                 <li class="breadcrumb-item"><a href="index.html">Home</a></li>
             </ol>
         </nav>
-        <button class="btn btn-primary" onclick="location.href='/reviewDelete'">삭제</button>
+        <button class="btn btn-primary" onclick="deleteReviews()">삭제</button>
     </div>
     <!-- End Page Title -->
 
@@ -66,7 +68,7 @@
                         <table class="table datatable">
                             <thead>
                             <tr>
-                                <th><input type="checkbox" id="checkAll" class="scale-120"></th>
+                                <th><input type="checkbox" id="checkAll" class="scale-120" onclick="toggleCheckboxes()"></th>
                                 <th>작성자</th>
                                 <th>상품명</th>
                                 <th>리뷰 상세 내용</th>
@@ -77,29 +79,79 @@
                             </thead>
                             <tbody>
                             <th:block th:each="review : ${reviewList}">
-                                <tr>
-                                    <td><input type="checkbox" name="deleteCheck" class="scale-120" value="${}>"></td>
+                                <tr id="reviewRow_${review.reviewNo}">
+                                    <td><input type="checkbox" name="deleteCheck" class="scale-120" value="${review.reviewNo}"></td>
                                     <td th:text="${review.memEmail}"></td>
                                     <td th:text="${review.productName}"></td>
                                     <td th:text="${review.reviewContent}"></td>
+                                    <td th:text="${review.reviewStar}"></td>
                                     <td th:text="${review.reviewDate}"></td>
-                                    <td th:text="${}"></td>
                                     <td></td>
                                 </tr>
                             </th:block>
-
                             </tbody>
                         </table>
                         <!-- End Table with stripped rows -->
-
                     </div>
                 </div>
-
             </div>
         </div>
     </section>
-
 </main><!-- End #main -->
+
+<script>
+    // 리뷰 목록 체크박스 전체 선택
+    function toggleCheckboxes() {
+        var checkboxes = document.getElementsByName("deleteCheck");
+        var checkAllCheckbox = document.getElementById("checkAll");
+        var allChecked = true;
+
+        for (var i = 0; i < checkboxes.length; i++) {
+            if (!checkboxes[i].checked) {
+                allChecked = false;
+                break;
+            }
+        }
+
+        for (var i = 0; i < checkboxes.length; i++) {
+            checkboxes[i].checked = !allChecked;
+        }
+    }
+
+    function deleteReviews() {
+        var checkedReview = [];
+        var checkboxes = document.getElementsByName("deleteCheck");
+
+        for (var i = 0; i < checkboxes.length; i++) {
+            if (checkboxes[i].checked) {
+                checkedReview.push(checkboxes[i].value);
+            }
+        }
+
+        jQuery.ajax({
+            method: "POST",
+            url: "/deleteReviews",
+            contentType: "application/json",
+            data: JSON.stringify(checkedReview),
+            dataType: 'json',
+            success: function(result) {
+                alert('선택된 리뷰가 삭제되었습니다.');
+
+                // 삭제된 리뷰 안 보이게
+                checkedReview.forEach(function(reviewId) {
+                    var row = document.getElementById("reviewRow_" + reviewId);
+                    if (row) {
+                        row.style.display = "none";
+                    }
+                });
+            },
+            error: function() {
+                alert('리뷰 삭제에 실패했습니다.');
+            }
+        });
+    }
+
+</script>
 
 <!-- ======= Footer ======= -->
 <div th:replace="fragments/footer :: 'footer'"></div>
