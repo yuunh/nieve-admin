@@ -79,8 +79,8 @@
                             </thead>
                             <tbody>
                             <th:block th:each="review : ${reviewList}">
-                                <tr id="reviewRow_${review.reviewNo}">
-                                    <td><input type="checkbox" name="deleteCheck" class="scale-120" value="${review.reviewNo}"></td>
+                                <tr th:id="'reviewRow_' + ${review.reviewNo}">
+                                    <td><input type="checkbox" name="deleteCheck" class="scale-120" th:value="${review.reviewNo}"></td>
                                     <td th:text="${review.memEmail}"></td>
                                     <td th:text="${review.productName}"></td>
                                     <td th:text="${review.reviewContent}"></td>
@@ -139,10 +139,7 @@
 
                 // 삭제된 리뷰 안 보이게
                 checkedReview.forEach(function(reviewId) {
-                    var row = document.getElementById("reviewRow_" + reviewId);
-                    if (row) {
-                        row.style.display = "none";
-                    }
+                    $("#reviewRow_" + reviewId).hide();
                 });
             },
             error: function() {

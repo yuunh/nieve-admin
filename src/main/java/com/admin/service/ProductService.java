@@ -73,13 +73,15 @@ public class ProductService {
     }
 
     public List<Review> getReviewList() {
-        List<ReviewEntity> reviewList = reviewRepository.findAll();
+        List<ReviewEntity> reviewList = reviewRepository.findAllNotDeleted();
         List<Review> reviews = new ArrayList<>();
+
         for (ReviewEntity re : reviewList) {
             MemberEntity me = re.getMember();
             ProductEntity pe = re.getProduct();
             FileEntity fe = re.getFile();
             Review r = Review.builder()
+                    .reviewNo(re.getReviewNo())
                     .reviewTitle(re.getReviewTitle())
                     .reviewContent(re.getReviewContent())
                     .reviewDate(re.getReviewDate())
@@ -93,12 +95,11 @@ public class ProductService {
         return reviews;
     }
 
-    public void deleteReviews(Review review) {
+    public void deleteReviews(Integer reviewNo) {
 
-        ReviewEntity reviewEntity = reviewRepository.findById(review.getReviewNo()).orElseThrow();
-        reviewEntity.setReviewState("n");
+        ReviewEntity reviewEntity = reviewRepository.findById(reviewNo).orElseThrow();
+        reviewEntity.setReviewState("N");
         reviewRepository.save(reviewEntity);
-
     }
 
     public void updateProduct(Product product) {
@@ -116,4 +117,5 @@ public class ProductService {
 
         productRepository.save(productEntity);
     }
+
 }

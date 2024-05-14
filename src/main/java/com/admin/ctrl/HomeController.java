@@ -12,7 +12,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class HomeController {
@@ -76,11 +78,16 @@ public class HomeController {
 
     @PostMapping("/deleteReviews")
     @ResponseBody
-    public String deleteReviews(@ModelAttribute Review review) {
+    public Map<String, Object> deleteReviews(@RequestBody Integer[] reviewNos) {
+        for(Integer reviewNo : reviewNos){
+            System.out.println("reivew No : " + reviewNo);
 
-        productService.deleteReviews(review);
+            productService.deleteReviews(reviewNo);
+        }
 
-        return "redirect:/reviewManagement.html";
+        Map<String, Object> res = new HashMap<>();
+        res.put("code", "OK");
+        return res;
     }
 
 
