@@ -20,7 +20,7 @@ public class ProductService {
     @Autowired private ReviewRepository reviewRepository;
 
     public List<Product> getProductList() {
-        List<ProductEntity> productList = productRepository.findAll();
+        List<ProductEntity> productList = productRepository.findAllNotDeleted();
         List<Product> products = new ArrayList<>();
         for (ProductEntity pe : productList) {
             CategoryEntity ce = pe.getCategory();
@@ -29,6 +29,7 @@ public class ProductService {
                     .productName(pe.getProductName())
                     .productPrice(pe.getProductPrice())
                     .productStock(pe.getProductStock())
+                    .productState(pe.getProductState())
                     .categoryName(ce.getCategoryName())
                     .build();
             products.add(p);
@@ -118,4 +119,10 @@ public class ProductService {
         productRepository.save(productEntity);
     }
 
+    public void deleteProduct(Integer productNo) {
+
+        ProductEntity productEntity = productRepository.findById(productNo).orElseThrow();
+        productEntity.setProductState("N");
+        productRepository.save(productEntity);
+    }
 }

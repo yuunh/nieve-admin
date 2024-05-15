@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Tables / Data - NiceAdmin Bootstrap Template</title>
+  <title>회원 목록</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -29,6 +29,8 @@
   <!-- Template Main CSS File -->
   <link href="assets/css/style.css" rel="stylesheet">
 
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
 </head>
 
 <body>
@@ -50,6 +52,7 @@
           <li class="breadcrumb-item"><a href="index.html">Home</a></li>
         </ol>
       </nav>
+      <button class="btn btn-primary" onclick="deleteMembers()">삭제</button>
     </div><!-- End Page Title -->
 
     <section class="section">
@@ -64,7 +67,7 @@
               <table class="table datatable" id="memberTable">
                 <thead>
                   <tr>
-                    <th><input type="checkbox" id="checkAll" class="scale-120"></th>
+                    <th><input type="checkbox" id="checkAll" class="scale-120" onclick="toggleCheckboxes()"></th>
                     <th style="width: 18;">
                       <b>N</b>o
                     </th>
@@ -76,7 +79,7 @@
                 </thead>
                 <tbody>
                   <th:block th:each="member : ${memberList}">
-                    <tr>
+                    <tr th:id="'memberRow_' + ${member.memNo}">
                       <td><input type="checkbox" name="deleteCheck" class="scale-120" value="${member.memNo%>"></td>
                       <td th:text="${member.memNo}"></td>
                       <td th:text="${member.memName}"></td>
@@ -89,15 +92,63 @@
                 </tbody>
               </table>
               <!-- End Table with stripped rows -->
-
             </div>
           </div>
-
         </div>
       </div>
     </section>
-
   </main><!-- End #main -->
+
+  <script>
+    // 리뷰 목록 체크박스 전체 선택
+    function toggleCheckboxes() {
+        var checkboxes = document.getElementsByName("deleteCheck");
+        var checkAllCheckbox = document.getElementById("checkAll");
+        var allChecked = true;
+
+        for (var i = 0; i < checkboxes.length; i++) {
+            if (!checkboxes[i].checked) {
+                allChecked = false;
+                break;
+            }
+        }
+
+        for (var i = 0; i < checkboxes.length; i++) {
+            checkboxes[i].checked = !allChecked;
+        }
+    }
+
+    function deleteReviews() {
+        var checkedReview = [];
+        var checkboxes = document.getElementsByName("deleteCheck");
+
+        for (var i = 0; i < checkboxes.length; i++) {
+            if (checkboxes[i].checked) {
+                checkedReview.push(checkboxes[i].value);
+            }
+        }
+
+        jQuery.ajax({
+            method: "POST",
+            url: "/deleteReviews",
+            contentType: "application/json",
+            data: JSON.stringify(checkedReview),
+            dataType: 'json',
+            success: function(result) {
+                alert('선택된 리뷰가 삭제되었습니다.');
+
+                // 삭제된 리뷰 안 보이게
+                checkedReview.forEach(function(reviewId) {
+                    $("#reviewRow_" + reviewId).hide();
+                });
+            },
+            error: function() {
+                alert('리뷰 삭제에 실패했습니다.');
+            }
+        });
+    }
+
+  </script>
 
   <!-- ======= Footer ======= -->
   <div th:replace="fragments/footer :: 'footer'"></div>

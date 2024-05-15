@@ -13,4 +13,7 @@ public interface ProductRepository extends JpaRepository<ProductEntity, Integer>
 
     @Query("select p from product p where p.productName like %:pn%")
     List<ProductEntity> productFind(@Param("pn") String productName);
+
+    @Query("select p from product as p where p.productState = 'Y'")
+    List<ProductEntity> findAllNotDeleted();
 }

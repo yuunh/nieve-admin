@@ -29,6 +29,8 @@
   <!-- Template Main CSS File -->
   <link href="assets/css/style.css" rel="stylesheet">
 
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
 </head>
 
 <body>
@@ -51,6 +53,7 @@
         </ol>
       </nav>
       <button class="btn btn-primary" onclick="location.href='/productAdd'">상품 추가</button>
+      <button class="btn btn-primary" onclick="deleteProduct()">삭제</button>
     </div>
     <!-- End Page Title -->
 
@@ -66,7 +69,7 @@
               <table class="table datatable">
                 <thead>
                   <tr>
-                    <th><input type="checkbox" id="checkAll" class="scale-120"></th>
+                    <th><input type="checkbox" id="checkAll" class="scale-120" onclick="toggleCheckboxes()"></th>
                     <th style="width: 18;">
                       <b>N</b>o
                     </th>
@@ -79,7 +82,7 @@
                 </thead>
                 <tbody>
                   <th:block th:each="product : ${productList}">
-                    <tr>
+                    <tr th:id="'productRow_' + ${product.productNo}">
                       <td><input type="checkbox" name="deleteCheck" class="scale-120" value="${product.productNo}>"></td>
                       <td th:text="${product.productNo}"></td>
                       <td th:text="${product.productName}"></td>
@@ -100,8 +103,59 @@
         </div>
       </div>
     </section>
-
   </main><!-- End #main -->
+
+  <script>
+    // 리뷰 목록 체크박스 전체 선택
+    function toggleCheckboxes() {
+        var checkboxes = document.getElementsByName("deleteCheck");
+        var checkAllCheckbox = document.getElementById("checkAll");
+        var allChecked = true;
+
+        for (var i = 0; i < checkboxes.length; i++) {
+            if (!checkboxes[i].checked) {
+                allChecked = false;
+                break;
+            }
+        }
+
+        for (var i = 0; i < checkboxes.length; i++) {
+            checkboxes[i].checked = !allChecked;
+        }
+    }
+
+    function deleteProduct() {
+        var checkedProduct = [];
+        var checkboxes = document.getElementsByName("deleteCheck");
+
+        for (var i = 0; i < checkboxes.length; i++) {
+            if (checkboxes[i].checked) {
+                checkedProduct.push(checkboxes[i].value);
+            }
+        }
+
+        jQuery.ajax({
+            method: "POST",
+            url: "/deleteProduct",
+            contentType: "application/json",
+            data: JSON.stringify(checkedProduct),
+            dataType: 'json',
+            success: function(result) {
+                alert('선택된 상품이 삭제되었습니다.');
+
+                // 삭제된 리뷰 안 보이게
+                checkedProduct.forEach(function(productId) {
+                    $("#productRow_" + productId).hide();
+                });
+            },
+            error: function() {
+                alert('상품 삭제에 실패했습니다.');
+            }
+        });
+    }
+
+  </script>
+
 
   <!-- ======= Footer ======= -->
   <div th:replace="fragments/footer :: 'footer'"></div>

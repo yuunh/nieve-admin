@@ -13,7 +13,8 @@ INSERT INTO `attachment` (`file_no`, `upload_date`, `change_name`, `file_path`, 
 INSERT INTO `attachment` (`file_no`, `upload_date`, `change_name`, `file_path`, `origin_name`, `status`) VALUES (4, '2024-05-07 13:42:41.000000', 'product_4.png', 'upload-dir/product_4.png', 'product_4.png', 'Y');
 INSERT INTO `attachment` (`file_no`, `upload_date`, `change_name`, `file_path`, `origin_name`, `status`) VALUES (5, '2024-05-07 13:42:41.000000', 'product_5.png', 'upload-dir/product_5.png', 'product_5.png', 'Y');
 
-INSERT INTO `product` (`product_no`, `product_name`, `product_price`, `product_stock`, `category_no`, `file_no`) VALUES (1, 'Colorful Stylish Shirt', 15000, 26, 1, 1);
+INSERT INTO `product` (`product_no`, `product_name`, `product_price`, `product_stock`, `category_no`, `file_no`, `product_state`) VALUES (1, 'Colorful Stylish Shirt', 15000, 26, 1, 1, 'Y');
+INSERT INTO `product` (`product_no`, `product_name`, `product_price`, `product_stock`, `category_no`, `file_no`, `product_state`) VALUES (2, 'Quartz Belt Watch', 35000, 18, 2, 2, 'Y');
 
 
 DELETE FROM review where 1 = 1;
