@@ -1,6 +1,7 @@
 package com.admin.service;
 
 import com.admin.entity.MemberEntity;
+import com.admin.entity.ProductEntity;
 import com.admin.model.Member;
 import com.admin.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +40,7 @@ public class MemberService {
                     .memEmail(me.getMemEmail())
                     .memName(me.getMemName())
                     .enrollDate(me.getEnrollDate())
+                    .memState(me.getMemState())
                     .build();
             members.add(m);
         }
@@ -51,6 +53,13 @@ public class MemberService {
         memberEntity.setMemEmail(member.getMemEmail());
         memberEntity.setPhone(member.getPhone());
         memberEntity.setAddress1(member.getAddress1());
+        memberRepository.save(memberEntity);
+    }
+
+    public void deleteMembers(Integer memberNo) {
+
+        MemberEntity memberEntity = memberRepository.findById(memberNo).orElseThrow();
+        memberEntity.setMemState("N");
         memberRepository.save(memberEntity);
     }
 }

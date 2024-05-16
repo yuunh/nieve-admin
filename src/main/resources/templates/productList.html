@@ -83,7 +83,7 @@
                 <tbody>
                   <th:block th:each="product : ${productList}">
                     <tr th:id="'productRow_' + ${product.productNo}">
-                      <td><input type="checkbox" name="deleteCheck" class="scale-120" value="${product.productNo}>"></td>
+                      <td><input type="checkbox" name="deleteCheck" class="scale-120" th:value="${product.productNo}"></td>
                       <td th:text="${product.productNo}"></td>
                       <td th:text="${product.productName}"></td>
                       <td th:text="${product.categoryName}"></td>

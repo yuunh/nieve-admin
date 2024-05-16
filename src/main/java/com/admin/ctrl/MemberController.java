@@ -5,12 +5,11 @@ import com.admin.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class MemberController {
@@ -36,5 +35,17 @@ public class MemberController {
     public String updateMember(@ModelAttribute Member member) {
         memberService.updateMember(member);
         return "redirect:/member/edit.html?&memNo=" + member.getMemNo();
+    }
+
+    @PostMapping("/deleteMembers")
+    @ResponseBody
+    public Map<String, Object> deleteMembers(@RequestBody Integer[] memberNos) {
+        for(Integer memberNo : memberNos){
+            memberService.deleteMembers(memberNo);
+        }
+
+        Map<String, Object> res = new HashMap<>();
+        res.put("code", "OK");
+        return res;
     }
 }

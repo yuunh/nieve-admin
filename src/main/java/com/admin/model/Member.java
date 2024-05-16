@@ -22,4 +22,6 @@ public class Member {
     private String postNo;
     private String adCheck;
     private Date enrollDate;
+    private String memState;
+
 }

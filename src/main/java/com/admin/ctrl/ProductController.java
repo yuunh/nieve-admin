@@ -1,6 +1,5 @@
 package com.admin.ctrl;
 
-import com.admin.entity.ProductEntity;
 import com.admin.model.Product;
 import com.admin.service.CategoryService;
 import com.admin.service.ProductService;
