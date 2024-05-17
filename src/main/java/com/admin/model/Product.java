@@ -17,6 +17,10 @@ public class Product {
     private String productState;
     private int categoryNo;
     private String categoryName;
-    private int fileNo;
-    private String fileName;
+    private int fileNo1;
+    private String fileName1;
+    private int fileNo2;
+    private String fileName2;
+    private int fileNo3;
+    private String fileName3;
 }

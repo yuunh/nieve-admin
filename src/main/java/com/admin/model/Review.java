@@ -18,6 +18,7 @@ public class Review {
     private String reviewContent;
     private Date reviewDate;
     private int reviewStar;
+    private Integer fileNo;
     private String fileName;
     private String memEmail;
     private String productName;

@@ -17,18 +17,18 @@ public class MemberController {
     @Autowired
     private MemberService memberService;
 
-    @GetMapping("/member/edit.html")
-    public String memberEdit(@RequestParam("memNo") int memNo, Model model) {
-        Member member = memberService.getMember(memNo);
-        model.addAttribute("member", member);
-        return "memberUpdate";
-    }
-
     @GetMapping("/memberList")
     public String memberList(Model model) {
         List<Member> memberList = memberService.getMemberList();
         model.addAttribute("memberList", memberList);
         return "memberList";
+    }
+
+    @GetMapping("/member/edit.html")
+    public String memberEdit(@RequestParam("memNo") int memNo, Model model) {
+        Member member = memberService.getMember(memNo);
+        model.addAttribute("member", member);
+        return "memberUpdate";
     }
 
     @PostMapping("/updateMember")

@@ -23,16 +23,7 @@ public class ProductService {
         List<ProductEntity> productList = productRepository.findAllNotDeleted();
         List<Product> products = new ArrayList<>();
         for (ProductEntity pe : productList) {
-            CategoryEntity ce = pe.getCategory();
-            Product p = Product.builder()
-                    .productNo(pe.getProductNo())
-                    .productName(pe.getProductName())
-                    .productPrice(pe.getProductPrice())
-                    .productStock(pe.getProductStock())
-                    .productState(pe.getProductState())
-                    .categoryName(ce.getCategoryName())
-                    .build();
-            products.add(p);
+            products.add(pe.toModel());
         }
 
         return products;
@@ -40,37 +31,28 @@ public class ProductService {
 
     public void addProduct(Product product){
         CategoryEntity category = categoryRepository.findById(product.getCategoryNo()).orElseThrow();
-        FileEntity file = fileRepository.findById(product.getFileNo()).orElseThrow();
+        FileEntity file1 = fileRepository.findById(product.getFileNo1()).orElseThrow();
+        FileEntity file2 = fileRepository.findById(product.getFileNo2()).orElseThrow();
+        FileEntity file3 = fileRepository.findById(product.getFileNo3()).orElseThrow();
         ProductEntity entity = ProductEntity.builder()
                         .productName(product.getProductName())
                         .productPrice(product.getProductPrice())
                         .productStock(product.getProductStock())
-                        .file(file)
-                .category(category)
+                        .file1(file1)
+                        .file2(file2)
+                        .file3(file3)
+                        .category(category)
+                        .productState("Y")
                         .build();
         productRepository.save(entity);
     }
 
 
     public Product getProduct(int productNo) {
-        ProductEntity pe = productRepository.findById(productNo).orElseThrow();
-        CategoryEntity ce = pe.getCategory();
-        FileEntity fe = pe.getFile();
-        Product p = Product.builder()
-                .productNo(pe.getProductNo())
-                .productName(pe.getProductName())
-                .productPrice(pe.getProductPrice())
-                .productStock(pe.getProductStock())
-                .categoryNo(ce.getCategoryNo())
-                .categoryName(ce.getCategoryName())
-                .fileNo(fe.getFileNo())
-                .build();
 
-        if(fe != null){
-            p.setFileNo(fe.getFileNo());
-            p.setFileName(fe.getChangeName());
-        }
-        return p;
+        ProductEntity pe = productRepository.findById(productNo).orElseThrow();
+
+        return pe.toModel();
     }
 
     public List<Review> getReviewList() {
@@ -106,9 +88,17 @@ public class ProductService {
     public void updateProduct(Product product) {
         ProductEntity productEntity = productRepository.findById(product.getProductNo()).orElseThrow();
         CategoryEntity categoryEntity = categoryRepository.findById(product.getCategoryNo()).orElseThrow();
-        if (product.getFileNo() != productEntity.getFile().getFileNo()) {
-            FileEntity fileEntity = fileRepository.findById(product.getFileNo()).orElseThrow();
-            productEntity.setFile(fileEntity);
+        if (product.getFileNo1() != productEntity.getFile1().getFileNo()) {
+            FileEntity fileEntity = fileRepository.findById(product.getFileNo1()).orElseThrow();
+            productEntity.setFile1(fileEntity);
+        }
+        if (product.getFileNo2() != productEntity.getFile2().getFileNo()) {
+            FileEntity fileEntity = fileRepository.findById(product.getFileNo2()).orElseThrow();
+            productEntity.setFile2(fileEntity);
+        }
+        if (product.getFileNo3() != productEntity.getFile3().getFileNo()) {
+            FileEntity fileEntity = fileRepository.findById(product.getFileNo3()).orElseThrow();
+            productEntity.setFile3(fileEntity);
         }
 
         productEntity.setProductName(product.getProductName());

@@ -25,10 +25,18 @@ public class ProductController {
     StorageService storageService;
 
     @PostMapping("/product")
-    public String registerProduct(@ModelAttribute Product product, @RequestParam("productImg") MultipartFile productImg) {
+    public String registerProduct(@ModelAttribute Product product,
+                                  @RequestParam("productImg1") MultipartFile productImg1,
+                                  @RequestParam("productImg2") MultipartFile productImg2,
+                                  @RequestParam("productImg3") MultipartFile productImg3) {
 
-        int fileNo = storageService.store(productImg);
-        product.setFileNo(fileNo);
+        int fileNo1 = storageService.store(productImg1);
+        int fileNo2 = storageService.store(productImg2);
+        int fileNo3 = storageService.store(productImg3);
+
+        product.setFileNo1(fileNo1);
+        product.setFileNo2(fileNo2);
+        product.setFileNo3(fileNo3);
         productService.addProduct(product);
         System.out.println("product : " + product);
 
@@ -58,11 +66,22 @@ public class ProductController {
     }
 
     @PostMapping("/productUpdate")
-    public String productUpdate(@ModelAttribute Product product, @RequestParam(value = "productImg", required = false) MultipartFile productImg) {
+    public String productUpdate(@ModelAttribute Product product,
+                                @RequestParam(value = "productImg1", required = false) MultipartFile productImg1,
+                                @RequestParam(value = "productImg2", required = false) MultipartFile productImg2,
+                                @RequestParam(value = "productImg3", required = false) MultipartFile productImg3) {
 
-        if (productImg != null && !productImg.isEmpty()) {
-            int fileNo = storageService.store(productImg);
-            product.setFileNo(fileNo);
+        if (productImg1 != null && !productImg1.isEmpty()) {
+            int fileNo1 = storageService.store(productImg1);
+            product.setFileNo1(fileNo1);
+        }
+        if (productImg2 != null && !productImg2.isEmpty()) {
+            int fileNo2 = storageService.store(productImg2);
+            product.setFileNo2(fileNo2);
+        }
+        if (productImg3 != null && !productImg3.isEmpty()) {
+            int fileNo3 = storageService.store(productImg3);
+            product.setFileNo3(fileNo3);
         }
 
         productService.updateProduct(product);
