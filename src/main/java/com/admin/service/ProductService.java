@@ -88,15 +88,15 @@ public class ProductService {
     public void updateProduct(Product product) {
         ProductEntity productEntity = productRepository.findById(product.getProductNo()).orElseThrow();
         CategoryEntity categoryEntity = categoryRepository.findById(product.getCategoryNo()).orElseThrow();
-        if (product.getFileNo1() != productEntity.getFile1().getFileNo()) {
+        if (product.getFileNo1() != null && product.getFileNo1() != productEntity.getFile1().getFileNo()) {
             FileEntity fileEntity = fileRepository.findById(product.getFileNo1()).orElseThrow();
             productEntity.setFile1(fileEntity);
         }
-        if (product.getFileNo2() != productEntity.getFile2().getFileNo()) {
+        if (product.getFileNo2() != null && product.getFileNo2() != productEntity.getFile2().getFileNo()) {
             FileEntity fileEntity = fileRepository.findById(product.getFileNo2()).orElseThrow();
             productEntity.setFile2(fileEntity);
         }
-        if (product.getFileNo3() != productEntity.getFile3().getFileNo()) {
+        if (product.getFileNo3() != null && product.getFileNo3() != productEntity.getFile3().getFileNo()) {
             FileEntity fileEntity = fileRepository.findById(product.getFileNo3()).orElseThrow();
             productEntity.setFile3(fileEntity);
         }

@@ -31,7 +31,8 @@ public class UserDetailService implements UserDetailsService {
 
     private UserDetails toUserDetails(MemberEntity entity) {
         List<GrantedAuthority> auths = new ArrayList<>();
-        auths.add(new SimpleGrantedAuthority("ROLE_USER"));
+        auths.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
+        auths.add(new SimpleGrantedAuthority("ROLL_USER"));
         return new CustomUser(entity.getMemEmail(), entity.getMemPwd(), entity.getMemNo(), auths);
     }
 
