@@ -36,6 +36,16 @@ public class HomeController {
         return "index";
     }
 
+    @GetMapping("/orderList.html")
+    public String orderList() {
+        return "orderList";
+    }
+
+    @GetMapping("/orderModify.html")
+    public String orderModify() {
+        return "orderModify";
+    }
+
     @GetMapping("/productList.html")
     public String productList(Model m) {
 

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+  <link href="/assets/img/favicon.png" rel="icon">
+  <link href="/assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.gstatic.com" rel="preconnect">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="/assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="/assets/vendor/quill/quill.snow.css" rel="stylesheet">
+  <link href="/assets/vendor/quill/quill.bubble.css" rel="stylesheet">
+  <link href="/assets/vendor/remixicon/remixicon.css" rel="stylesheet">
+  <link href="/assets/vendor/simple-datatables/style.css" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="/assets/css/style.css" rel="stylesheet">
+</head>
+
+<body>
+
+<!-- ======= Header ======= -->
+<div th:replace="fragments/header :: 'header'"></div>
+<!-- End Header -->
+
+<!-- ======= Sidebar ======= -->
+<div th:replace="fragments/sidebar :: 'aside'"></div>
+<!-- End Sidebar-->
+
+  <main id="main" class="main">
+
+    <div class="col-lg-6">
+
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">회원 정보</h5>
+
+          <!-- Vertical Form -->
+          <form class="row g-3" id="memberForm" action="/updateMember" method="post">
+            <div class="col-6">
+              <label for="memName" class="form-label">주문번호</label>
+              <input type="text" class="form-control" id="memName" name="memName" required>
+            </div>
+            <div class="col-6">
+              <label for="memEmail" class="form-label">주문자</label>
+              <input type="email" class="form-control" id="memEmail" name="memEmail" required>
+            </div>
+            <div class="col-12">
+              <label for="phone" class="form-label">상품명</label>
+              <input type="text" class="form-control" id="phone" name="phone" required>
+            </div>
+            <div class="col-12">
+              <label for="address1" class="form-label">수량</label>
+              <input type="text" class="form-control" id="address1" name="address1" required>
+            </div>
+            <div class="col-12">
+              <label for="phone" class="form-label">배송지</label>
+              <input type="text" class="form-control" name="phone" required>
+            </div>
+            <div class="col-12">
+              <label for="phone" class="form-label">주문금액</label>
+              <input type="text" class="form-control" name="phone" required>
+            </div>
+            <div class="col-12">
+              <label for="phone" class="form-label">주문상태</label>
+              <select>
+                <option>주문</option>
+                <option>결제완료</option>
+                <option>상품준비</option>
+                <option>배송중</option>
+                <option>배송완료</option>
+              </select>
+            </div>
+            <div class="text-center">
+              <button type="submit" class="btn btn-primary">수정하기</button>
+              <button type="reset" class="btn btn-secondary">Reset</button>
+            </div>
+          </form><!-- Vertical Form -->
+
+        </div>
+      </div>
+    </div>
+  </main><!-- End #main -->
+
+<!-- ======= Footer ======= -->
+<div th:replace="fragments/footer :: 'footer'"></div>
+<!-- End Footer -->
+</body>
+
+</html>
