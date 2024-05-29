@@ -1,30 +1,34 @@
 package com.admin.ctrl;
 
+import com.admin.common.StorageFileNotFoundException;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.servlet.resource.NoResourceFoundException;
 
-@Controller
-public class CustomErrorController implements ErrorController {
+@ControllerAdvice
+public class CustomErrorController {
 
-    @GetMapping("/error")
-    public String handleError(HttpServletRequest request) {
-
-        Object status = request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);
-
-        if (status != null) {
-            Integer statusCode = Integer.valueOf(status.toString());
-
-            if (statusCode == HttpStatus.NOT_FOUND.value()) {
-                return "error_404";
-            } else if (statusCode == HttpStatus.INTERNAL_SERVER_ERROR.value()) {
-                return "error_500";
-            }
-        }
-        return "error";
+    @ExceptionHandler(Exception.class)
+    public String handleError(Exception e) {
+        e.printStackTrace();
+        return "error_500";
     }
 
+    @ExceptionHandler(NoResourceFoundException.class)
+    public String noResourceException(NoResourceFoundException e){
+        e.printStackTrace();
+        return "error_404";
+    }
+
+    @ExceptionHandler(StorageFileNotFoundException.class)
+    public ResponseEntity<?> handleStorageFileNotFound(StorageFileNotFoundException exc) {
+        return ResponseEntity.notFound().build();
+    }
 }
