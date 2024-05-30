@@ -50,8 +50,8 @@
           <!-- Vertical Form -->
           <form class="row g-3" id="memberForm" action="/updateMember" method="post">
             <div class="col-6">
-              <label for="memName" class="form-label">주문번호</label>
-              <input type="text" class="form-control" id="memName" name="memName" required>
+              <label for="orderNo" class="form-label">주문번호</label>
+              <input type="text" class="form-control" id="orderNo" th:value="${order.orderNo}" required>
             </div>
             <div class="col-6">
               <label for="memEmail" class="form-label">주문자</label>
@@ -76,6 +76,7 @@
             <div class="col-12">
               <label for="phone" class="form-label">주문상태</label>
               <select>
+                <option th:text="${order.orderState}"></option>
                 <option>주문</option>
                 <option>결제완료</option>
                 <option>상품준비</option>

@@ -1,9 +1,6 @@
 package com.admin.ctrl;
 
-import com.admin.model.Category;
-import com.admin.model.Member;
-import com.admin.model.Product;
-import com.admin.model.Review;
+import com.admin.model.*;
 import com.admin.service.CategoryService;
 import com.admin.service.MemberService;
 import com.admin.service.ProductService;
@@ -36,16 +33,6 @@ public class HomeController {
         return "index";
     }
 
-    @GetMapping("/orderList.html")
-    public String orderList() {
-        return "orderList";
-    }
-
-    @GetMapping("/orderModify.html")
-    public String orderModify() {
-        return "orderModify";
-    }
-
     @GetMapping("/productList.html")
     public String productList(Model m) {
 
@@ -64,6 +51,16 @@ public class HomeController {
         m.addAttribute("memberList", memberList);
 
         return "memberList";
+    }
+
+    @GetMapping("/orderList.html")
+    public String orderList(Model m) {
+
+        List<ProductOrder> orderList = productService.getOrderList();
+
+        m.addAttribute("orderList", orderList);
+
+        return "orderList";
     }
 
     @GetMapping("categoryList.html")
@@ -99,6 +96,5 @@ public class HomeController {
         res.put("code", "OK");
         return res;
     }
-
 
 }

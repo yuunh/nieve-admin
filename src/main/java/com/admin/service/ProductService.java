@@ -3,6 +3,7 @@ package com.admin.service;
 import com.admin.entity.*;
 import com.admin.model.Category;
 import com.admin.model.Product;
+import com.admin.model.ProductOrder;
 import com.admin.model.Review;
 import com.admin.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,9 +19,13 @@ public class ProductService {
     @Autowired private CategoryRepository categoryRepository;
     @Autowired private FileRepository fileRepository;
     @Autowired private ReviewRepository reviewRepository;
+    @Autowired private OrderRepository orderRepository;
+    @Autowired private MemberRepository memberRepository;
 
     public List<Product> getProductList() {
+
         List<ProductEntity> productList = productRepository.findAllNotDeleted();
+
         List<Product> products = new ArrayList<>();
         for (ProductEntity pe : productList) {
             products.add(pe.toModel());
@@ -29,21 +34,21 @@ public class ProductService {
         return products;
     }
 
-    public void addProduct(Product product){
+    public void addProduct(Product product) {
         CategoryEntity category = categoryRepository.findById(product.getCategoryNo()).orElseThrow();
         FileEntity file1 = fileRepository.findById(product.getFileNo1()).orElseThrow();
         FileEntity file2 = fileRepository.findById(product.getFileNo2()).orElseThrow();
         FileEntity file3 = fileRepository.findById(product.getFileNo3()).orElseThrow();
         ProductEntity entity = ProductEntity.builder()
-                        .productName(product.getProductName())
-                        .productPrice(product.getProductPrice())
-                        .productStock(product.getProductStock())
-                        .file1(file1)
-                        .file2(file2)
-                        .file3(file3)
-                        .category(category)
-                        .productState("Y")
-                        .build();
+                .productName(product.getProductName())
+                .productPrice(product.getProductPrice())
+                .productStock(product.getProductStock())
+                .file1(file1)
+                .file2(file2)
+                .file3(file3)
+                .category(category)
+                .productState("Y")
+                .build();
         productRepository.save(entity);
     }
 
@@ -79,7 +84,6 @@ public class ProductService {
     }
 
     public void deleteReviews(Integer reviewNo) {
-
         ReviewEntity reviewEntity = reviewRepository.findById(reviewNo).orElseThrow();
         reviewEntity.setReviewState("N");
         reviewRepository.save(reviewEntity);
@@ -110,9 +114,39 @@ public class ProductService {
     }
 
     public void deleteProduct(Integer productNo) {
-
         ProductEntity productEntity = productRepository.findById(productNo).orElseThrow();
         productEntity.setProductState("N");
         productRepository.save(productEntity);
+    }
+
+    public List<ProductOrder> getOrderList() {
+
+        List<ProductOrderEntity> orderList = orderRepository.findAll();
+
+        List<ProductOrder> orders = new ArrayList<>();
+        for (ProductOrderEntity oe : orderList) {
+            MemberEntity me = oe.getMember();
+            ProductEntity pe = oe.getProduct();
+            ProductOrder o = ProductOrder.builder()
+                    .orderNo(oe.getOrderNo())
+                    .memEmail(me.getMemEmail())
+                    .productName(pe.getProductName())
+                    .productPrice(pe.getProductPrice())
+                    .orderState(oe.getOrderState())
+                    .build();
+            orders.add(o);
+        }
+        return orders;
+    }
+
+    public ProductOrder gerOrder(int orderNo) {
+
+        ProductOrderEntity oe = orderRepository.findById(orderNo).orElseThrow();
+
+        ProductOrder o = ProductOrder.builder()
+                .orderNo(oe.getOrderNo())
+                .orderState(oe.getOrderState())
+                .build();
+        return o;
     }
 }

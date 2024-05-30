@@ -1,6 +1,7 @@
 package com.admin.ctrl;
 
 import com.admin.model.Product;
+import com.admin.model.ProductOrder;
 import com.admin.service.CategoryService;
 import com.admin.service.ProductService;
 import com.admin.service.StorageService;
@@ -101,5 +102,15 @@ public class ProductController {
         Map<String, Object> res = new HashMap<>();
         res.put("code", "OK");
         return res;
+    }
+
+    @GetMapping("/orderModify.html")
+    public String orderModify(@RequestParam(value = "orderNo", required = false) int orderNo, Model m) {
+
+        ProductOrder order = productService.gerOrder(orderNo);
+
+        m.addAttribute("order", order);
+
+        return "orderModify";
     }
 }

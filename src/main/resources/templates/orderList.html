@@ -77,15 +77,18 @@
                   </tr>
                 </thead>
                 <tbody>
+                  <th:block th:each="order : ${orderList}">
                     <tr>
                       <td><input type="checkbox" name="deleteCheck" class="scale-120"></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td><a th:href="orderModify.html">자세히</a></td>
+                      <td th:text="${order.orderNo}"></td>
+                      <td th:text="${order.memEmail}"></td>
+                      <td th:text="${order.productName}"></td>
+                      <td th:text="${order.productPrice}"></td>
+                      <td th:text="${order.orderState}"></td>
+                      <td><a th:href="@{/orderModify.html?(orderNo=${order.orderNo})}">자세히</a></td>
+
                     </tr>
+                  </th:block>
                 </tbody>
               </table>
               <!-- End Table with stripped rows -->
