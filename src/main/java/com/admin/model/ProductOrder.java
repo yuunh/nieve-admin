@@ -17,5 +17,9 @@ public class ProductOrder {
     private String orderState;
     private String memName;
     private String address;
+    private Integer postNo;
+    private Integer phone;
+    private Integer totalPrice;
+    private String message;
 
 }
