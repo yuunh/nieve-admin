@@ -73,6 +73,10 @@
               <input type="text" class="form-control" name="address" id="address" th:value="${order.address}" readonly>
             </div>
             <div class="col-12">
+              <label for="message" class="form-label">배송메세지</label>
+              <input type="text" class="form-control" name="message" id="message" th:value="${order.message}" readonly>
+            </div>
+            <div class="col-12">
               <label for="totalPrice" class="form-label">주문금액</label>
               <input type="text" class="form-control" name="totalPrice" id="totalPrice" th:value="${order.totalPrice}" readonly>
             </div>

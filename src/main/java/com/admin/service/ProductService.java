@@ -151,6 +151,7 @@ public class ProductService {
                 .productName(pe.getProductName())
                 .phone(oe.getPhone())
                 .address(oe.getAddress())
+                .message(oe.getMessage())
                 .totalPrice(oe.getTotalPrice())
                 .orderState(oe.getOrderState())
                 .build();
