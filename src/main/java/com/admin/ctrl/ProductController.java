@@ -10,7 +10,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -108,9 +110,22 @@ public class ProductController {
     public String orderModify(@RequestParam(value = "orderNo", required = false) int orderNo, Model m) {
 
         ProductOrder order = productService.gerOrder(orderNo);
-
         m.addAttribute("order", order);
 
+        List<String> orderStates = Arrays.asList("주문", "결제완료", "상품준비", "배송중", "배송완료");
+        m.addAttribute("orderStates", orderStates);
         return "orderModify";
     }
+
+    @PostMapping("/orderModify")
+    public String orderModify(@ModelAttribute ProductOrder order, RedirectAttributes redirectAttributes) {
+
+        productService.modifyOrder(order);
+
+        redirectAttributes.addFlashAttribute("message", "수정이 완료되었습니다.");
+
+        return "redirect:/orderModify.html?&orderNo=" + order.getOrderNo();
+    }
+
+
 }

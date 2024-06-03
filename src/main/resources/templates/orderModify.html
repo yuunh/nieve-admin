@@ -27,6 +27,7 @@
 
   <!-- Template Main CSS File -->
   <link href="/assets/css/style.css" rel="stylesheet">
+
 </head>
 
 <body>
@@ -40,50 +41,51 @@
 <!-- End Sidebar-->
 
   <main id="main" class="main">
-
+    <div th:if="${message}" class="alert alert-success" role="alert">
+      <span th:text="${message}"></span>
+    </div>
     <div class="col-lg-6">
 
       <div class="card">
         <div class="card-body">
-          <h5 class="card-title">회원 정보</h5>
+          <h5 class="card-title">주문 정보</h5>
 
           <!-- Vertical Form -->
-          <form class="row g-3" id="memberForm" action="/updateMember" method="post">
+          <form class="row g-3" id="memberForm" action="/orderModify" method="post">
             <div class="col-6">
               <label for="orderNo" class="form-label">주문번호</label>
-              <input type="text" class="form-control" id="orderNo" th:value="${order.orderNo}" required>
+              <input type="text" class="form-control" id="orderNo" th:value="${order.orderNo}" readonly>
             </div>
             <div class="col-6">
-              <label for="memEmail" class="form-label">주문자</label>
-              <input type="email" class="form-control" id="memEmail" name="memEmail" required>
+              <label for="memName" class="form-label">주문자</label>
+              <input type="email" class="form-control" id="memName" name="memName" th:value="${order.memName}" readonly>
             </div>
             <div class="col-12">
-              <label for="phone" class="form-label">상품명</label>
-              <input type="text" class="form-control" id="phone" name="phone" required>
+              <label for="productName" class="form-label">상품명</label>
+              <input type="text" class="form-control" id="productName" name="productName" th:value="${order.productName}" readonly>
             </div>
             <div class="col-12">
               <label for="phone" class="form-label">연락처</label>
-              <input type="text" class="form-control" name="phone" required>
+              <input type="text" class="form-control" name="phone" id="phone" th:value="${order.phone}" readonly>
             </div>
             <div class="col-12">
-              <label for="phone" class="form-label">배송지</label>
-              <input type="text" class="form-control" name="phone" required>
+              <label for="address" class="form-label">배송지</label>
+              <input type="text" class="form-control" name="address" id="address" th:value="${order.address}" readonly>
             </div>
             <div class="col-12">
-              <label for="phone" class="form-label">주문금액</label>
-              <input type="text" class="form-control" name="phone" required>
+              <label for="totalPrice" class="form-label">주문금액</label>
+              <input type="text" class="form-control" name="totalPrice" id="totalPrice" th:value="${order.totalPrice}" readonly>
             </div>
             <div class="col-12">
-              <label for="phone" class="form-label">주문상태</label>
-              <select>
-                <option th:text="${order.orderState}"></option>
-                <option>주문</option>
-                <option>결제완료</option>
-                <option>상품준비</option>
-                <option>배송중</option>
-                <option>배송완료</option>
+              <label for="orderState" class="form-label">주문상태</label>
+              <select class="form-select" id="orderState" name="orderState">
+                <option th:each="state : ${orderStates}"
+                        th:text="${state}"
+                        th:selected="${state} == ${order.orderState}">
+                </option>
               </select>
             </div>
+            <input type="hidden" name="orderNo" th:value="${order.orderNo}" />
             <div class="text-center">
               <button type="submit" class="btn btn-primary">수정하기</button>
               <button type="reset" class="btn btn-secondary">Reset</button>

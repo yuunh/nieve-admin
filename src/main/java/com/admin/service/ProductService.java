@@ -143,10 +143,26 @@ public class ProductService {
 
         ProductOrderEntity oe = orderRepository.findById(orderNo).orElseThrow();
 
+        MemberEntity me = oe.getMember();
+        ProductEntity pe = oe.getProduct();
         ProductOrder o = ProductOrder.builder()
                 .orderNo(oe.getOrderNo())
+                .memName(me.getMemName())
+                .productName(pe.getProductName())
+                .phone(oe.getPhone())
+                .address(oe.getAddress())
+                .totalPrice(oe.getTotalPrice())
                 .orderState(oe.getOrderState())
                 .build();
         return o;
+    }
+
+    public void modifyOrder(ProductOrder order) {
+
+        ProductOrderEntity oe = orderRepository.findById(order.getOrderNo()).orElseThrow();
+
+        oe.setOrderState(order.getOrderState());
+
+        orderRepository.save(oe);
     }
 }
